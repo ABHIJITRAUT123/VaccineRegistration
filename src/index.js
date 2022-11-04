@@ -1,13 +1,21 @@
-const express = require("express");
+#! /usr/bin/env node
+const states = require("../util/states");
+const districts = require("../util/districts");
+const slots = require("../util/slots");
+const program = require("commander");
 
-const app = express();
+program.option("-a","--available","avaialble slots")
+program
+  .command('states')
+  .description('list down all the states')
+  .action(states);
+  program
+  .command('districts <stateid>')
+  .description('Get all districts for state using state id')
+  .action(districts);
+  program
+  .command('slots <districtid>')
+  .description('Get all slots for district id')
+  .action(slots);
 
-app.get("/", (req, res) => {
-  res.send(`<h2>Vaccine Registration Home Page</h2>
-            <button>Sign Up</button>
-            <span>
-              <button>Log In</button>
-            </span>`);
-});
-
-app.listen(8080);
+program.parse();
